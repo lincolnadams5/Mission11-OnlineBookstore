@@ -1,0 +1,3 @@
+Navbar — navbar, navbar-expand-lg, navbar-dark, bg-dark, navbar-brand in Navbar.tsx. A full Bootstrap navigation bar component.
+
+List Group — list-group, list-group-item, list-group-item-action, active in BookList.tsx. Used for the category filter sidebar where the active selection is highlighted.

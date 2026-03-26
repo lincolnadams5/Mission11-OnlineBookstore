@@ -1,6 +1,6 @@
 import type { Book } from '../types/Book'
 
-function BookCard({ book }: { book: Book }) {
+function BookCard({ book, onAddToCart }: { book: Book; onAddToCart: (book: Book) => void }) {
   return (
     <div className="card h-100">
       <div className="card-body d-flex flex-column gap-2">
@@ -27,6 +27,9 @@ function BookCard({ book }: { book: Book }) {
           </li>
         </ul>
         <p className="fw-bold text-success fs-5 mb-0 mt-auto">${book.price.toFixed(2)}</p>
+        <button className="btn btn-primary btn-sm mt-2" onClick={() => onAddToCart(book)}>
+          Add to Cart
+        </button>
       </div>
     </div>
   )
