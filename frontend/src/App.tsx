@@ -3,6 +3,7 @@ import { CartProvider } from './context/CartContext'
 import { Navbar } from './components/Navbar'
 import BookList from './components/BookList'
 import CartPage from './pages/CartPage'
+import AdminBooksPage from './pages/AdminBooksPage'
 import './App.css'
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
         <Routes>
           <Route path="/" element={<BookList />} />
           <Route path="/cart" element={<CartPage />} />
+          <Route path="/adminbooks" element={<AdminBooksPage />} />
         </Routes>
       </CartProvider>
     </BrowserRouter>
