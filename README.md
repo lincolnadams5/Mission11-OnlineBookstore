@@ -1,4 +1,11 @@
-# Mission11-OnlineBookstore
+# OnlineBookstore
+
+## Branches
+
+1. main - contains the latest branch updates
+2. mission11 - Mission11 Snapshot
+3. mission12 - Mission12 Snapshot
+4. mission13 - Mission13 Snapshot
 
 IS413 Assignment to create a web app for an online bookstore.
 
