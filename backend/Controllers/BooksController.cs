@@ -17,8 +17,8 @@ public class BooksController : ControllerBase
     }
 
     // GET: api/books
-    [HttpGet("books")]
-    public async Task<IActionResult> GetBooks(int pageSize, int pageNum = 1, string? category = null)
+    [HttpGet]
+    public async Task<IActionResult> GetBooks(int pageSize = 5, int pageNum = 1, string? category = null)
     {
         // Get all books from the database
         var query = _context.Books.AsQueryable();
