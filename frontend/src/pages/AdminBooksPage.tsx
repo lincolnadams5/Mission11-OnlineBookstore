@@ -1,16 +1,5 @@
 import { useState, useEffect } from 'react'
-
-interface BookRecord {
-  bookID: number
-  title: string
-  author: string
-  publisher: string
-  isbn: string
-  classification: string
-  category: string
-  pageCount: number
-  price: number
-}
+import { type BookRecord, getAllBooks, addBook, updateBook, deleteBook } from '../lib/BookstoreAPI'
 
 const emptyBook: BookRecord = {
   bookID: 0,
@@ -38,9 +27,7 @@ export default function AdminBooksPage() {
   }, [])
 
   function fetchBooks() {
-    fetch('/api/books/all')
-      .then((res) => res.json())
-      .then(setBooks)
+    getAllBooks().then(setBooks)
   }
 
   function startEdit(book: BookRecord) {
@@ -50,29 +37,21 @@ export default function AdminBooksPage() {
   }
 
   function saveEdit() {
-    fetch(`/api/books/${editForm.bookID}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(editForm),
-    }).then(() => {
+    updateBook(editForm.bookID, editForm).then(() => {
       setEditingId(null)
       fetchBooks()
     })
   }
 
-  function deleteBook(id: number) {
-    fetch(`/api/books/${id}`, { method: 'DELETE' }).then(() => {
+  function handleDelete(id: number) {
+    deleteBook(id).then(() => {
       setDeleteConfirmId(null)
       fetchBooks()
     })
   }
 
-  function addBook() {
-    fetch('/api/books', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ...newBook, bookID: 0 }),
-    }).then(() => {
+  function handleAddBook() {
+    addBook(newBook).then(() => {
       setNewBook(emptyBook)
       fetchBooks()
     })
@@ -159,7 +138,7 @@ export default function AdminBooksPage() {
                         <span className="me-2">Delete?</span>
                         <button
                           className="btn btn-sm btn-danger me-1"
-                          onClick={() => deleteBook(book.bookID)}
+                          onClick={() => handleDelete(book.bookID)}
                         >
                           Yes
                         </button>
@@ -229,7 +208,7 @@ export default function AdminBooksPage() {
           />
         </div>
         <div className="col-md-1">
-          <button className="btn btn-success" onClick={addBook}>
+          <button className="btn btn-success" onClick={handleAddBook}>
             Add Book
           </button>
         </div>

@@ -4,6 +4,7 @@ import type { Book } from '../types/Book'
 import BookCard from './BookCard'
 import CartSummary from './CartSummary'
 import { useCart } from '../context/useCart'
+import { getBooks, getCategories } from '../lib/BookstoreAPI'
 
 function BookList() {
   const location = useLocation()
@@ -25,20 +26,15 @@ function BookList() {
 
   // Fetch categories once on mount
   useEffect(() => {
-    fetch('/api/books/categories')
-      .then((res) => res.json())
-      .then(setCategories)
+    getCategories().then(setCategories)
   }, [])
 
   // Fetch books when pageSize, pageNum, or selectedCategory changes
   useEffect(() => {
-    const url = `/api/books/books?pageSize=${pageSize}&pageNum=${pageNum}${selectedCategory ? `&category=${encodeURIComponent(selectedCategory)}` : ''}`
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => {
-        setBooks(data.books.map((b: Record<string, unknown>) => ({ ...b, id: b.bookID })))
-        setTotalNumBooks(data.totalNumBooks)
-      })
+    getBooks(pageSize, pageNum, selectedCategory || undefined).then((data) => {
+      setBooks(data.books.map((b) => ({ ...b, id: b.bookID })) as Book[])
+      setTotalNumBooks(data.totalNumBooks)
+    })
   }, [pageSize, pageNum, selectedCategory])
 
   const handleCategorySelect = (cat: string) => {
